@@ -224,7 +224,7 @@ var UIController = (function () {
       newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
 
       // Insert the HTML into the DOM
-      document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
+      document.body.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     },
 
     deleteListItem: function (selectorID) {
@@ -235,7 +235,7 @@ var UIController = (function () {
     clearFields: function () {
       var fields, fieldsArr;
 
-      fields = document.querySelectorAll(
+      fields = document.body.querySelectorAll(
         DOMstrings.inputDescription + ', ' + DOMstrings.inputValue
       );
 
@@ -252,28 +252,29 @@ var UIController = (function () {
       var type;
       type = obj.budget >= 0 ? 'inc' : 'exp';
 
-      document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(
+      document.body.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(
         obj.budget,
         type
       );
-      document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(
+      document.body.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(
         obj.totalInc,
-        "inc"
+        'inc'
       );
-      document.querySelector(
-        DOMstrings.expensesLabel
-      ).textContent = formatNumber(obj.totalExp, "exp");
+      document.body.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(
+        obj.totalExp,
+        'exp'
+      );
 
       if (obj.percentage > 0) {
-        document.querySelector(DOMstrings.percentageLabel).textContent =
-          obj.percentage + "%";
+        document.body.querySelector(DOMstrings.percentageLabel).textContent =
+          obj.percentage + '%';
       } else {
-        document.querySelector(DOMstrings.percentageLabel).textContent = "---";
+        document.body.querySelector(DOMstrings.percentageLabel).textContent = 'tbd';
       }
     },
 
     displayPercentages: function (percentages) {
-      var fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
+      var fields = document.body.querySelectorAll(DOMstrings.expensesPercLabel);
 
       nodeListForEach(fields, function (current, index) {
         if (percentages[index] > 0) {
@@ -311,7 +312,7 @@ var UIController = (function () {
     },
 
     changedType: function () {
-      var fields = document.querySelectorAll(
+      var fields = document.body.querySelectorAll(
         DOMstrings.inputType +
           ',' +
           DOMstrings.inputDescription +
@@ -323,7 +324,7 @@ var UIController = (function () {
         cur.classList.toggle('red-focus');
       });
 
-      document.querySelector(DOMstrings.inputBtn).classList.toggle("red");
+      document.body.querySelector(DOMstrings.inputBtn).classList.toggle('red');
     },
 
     getDOMstrings: function () {
@@ -337,7 +338,7 @@ var controller = (function (budgetCtrl, UICtrl) {
   var setupEventListeners = function () {
     var DOM = UICtrl.getDOMstrings();
 
-    document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+    document.body.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     document.addEventListener('keypress', function (event) {
       // Code of `Enter` is 13
@@ -346,13 +347,9 @@ var controller = (function (budgetCtrl, UICtrl) {
       }
     });
 
-    document
-      .querySelector(DOM.container)
-      .addEventListener("click", ctrlDeleteItem);
+    document.body.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
 
-    document
-      .querySelector(DOM.inputType)
-      .addEventListener("change", UICtrl.changedType);
+    document.body.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
   };
 
   var updateBudget = function () {
@@ -377,14 +374,45 @@ var controller = (function (budgetCtrl, UICtrl) {
     UICtrl.displayPercentages(percentages);
   };
 
+  function addElementClassd(newClass, classList) {
+    if (!newClass || !classList) {
+      return;
+    }
+
+    if (classList.contains(newClass)) {
+      classList.remove(newClass);
+      setTimeout(function() {
+        classList.add(newClass);
+      });
+    } else {
+      classList.add(newClass);
+    }
+  }
+
   var ctrlAddItem = function () {
     var input, newItem;
 
     // 1. Get the field input data
     input = UICtrl.getInput();
 
-    if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
-      // 2. Add the item to the budget controller
+    if (input.description === '') {
+      var add__description = document.body.querySelector('.add__description');
+      addElementClassd('required', add__description.classList);
+    } else if ((isNaN(input.value) || !input.value)) {
+      var addValue = document.body.querySelector('.add__value');
+      if (addValue === document.activeElement) {
+        addElementClassd('required', addValue.classList);
+      } else {
+        addValue.focus();
+      }
+    }
+
+    if (
+      input.description !== ''
+      && !isNaN(input.value)
+      && input.value > 0
+    ) {
+      // Add the item to the budget controller
       newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
       // Add the item to the UI

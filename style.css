@@ -23,14 +23,11 @@ body {
   font-weight: 400;
 }
 
-.right {
-  float: right;
-}
 .red {
-  color: #ff5049 !important;
+  color: #ff6d34 !important;
 }
 .red-focus:focus {
-  border: 1px solid #ff5049 !important;
+  border: 1px solid #ff6d34 !important;
 }
 
 /**
@@ -72,51 +69,61 @@ body {
 
 .budget__income,
 .budget__expenses {
+  display: flex;
+  justify-content: space-between;
   padding: 12px;
   text-transform: uppercase;
 }
 
 .budget__income {
   margin-bottom: 10px;
-  background-color: #28b9b5;
+  background-color: #00bda6;
 }
 
 .budget__expenses {
-  background-color: #ff5049;
+  background-color: #ff6d34;
 }
 
 .budget__income--text,
 .budget__expenses--text {
-  float: left;
-  font-size: 13px;
-  color: #444;
-  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .budget__income--value,
 .budget__expenses--value {
   letter-spacing: 1px;
-  float: left;
 }
 
 .budget__income--percentage,
 .budget__expenses--percentage {
-  float: left;
   width: 34px;
   font-size: 11px;
   padding: 3px 0;
   margin-left: 10px;
+  text-transform: initial;
+}
+
+.budget__details {
+  display: flex;
 }
 
 .budget__expenses--percentage {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #bb5027;
   text-align: center;
   border-radius: 3px;
 }
 
-/**********************************************
-    BOTTOM PART
-**********************************************/
+input.required {
+  animation: required 1.5s;
+}
+@keyframes required {
+  30%,
+  60% {
+    border-color: red;
+    box-shadow: 0px 0 3px red;
+  }
+}
 
 /**
  * BOTTOM PART
@@ -148,14 +155,14 @@ body {
 
 .add__description,
 .add__value {
+  margin-right: 10px;
   border: 1px solid #e7e7e7;
-  background-color: #fff;
-  color: inherit;
+  border-radius: 5px;
+  padding: 12px 15px;
   font-family: inherit;
   font-size: 14px;
-  padding: 12px 15px;
-  margin-right: 10px;
-  border-radius: 5px;
+  color: inherit;
+  background-color: #ffffff;
   transition: border 0.3s;
 }
 
@@ -170,7 +177,7 @@ body {
   font-size: 35px;
   background: none;
   border: none;
-  color: #28b9b5;
+  color: #00bda6;
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
@@ -186,7 +193,7 @@ body {
 .add__description:focus,
 .add__value:focus {
   outline: none;
-  border: 1px solid #28b9b5;
+  border: 1px solid #00bda6;
 }
 
 .add__btn:focus {
@@ -195,18 +202,17 @@ body {
 
 /** LISTS */
 .container {
+  display: flex;
   width: 1000px;
   margin: 60px auto;
 }
 
 .income {
-  float: left;
   width: 475px;
   margin-right: 50px;
 }
 
 .expenses {
-  float: left;
   width: 475px;
 }
 
@@ -217,14 +223,16 @@ h2 {
   margin-bottom: 15px;
 }
 
-.icome__title {
-  color: #28b9b5;
+.income__title {
+  color: #00bda6;
 }
 .expenses__title {
-  color: #ff5049;
+  color: #ff6d34;
 }
 
 .item {
+  display: flex;
+  justify-content: space-between;
   padding: 13px;
   border-bottom: 1px solid #e7e7e7;
 }
@@ -236,51 +244,44 @@ h2 {
   background-color: #f7f7f7;
 }
 
-.item__description {
-  float: left;
-}
-
-.item__value {
-  float: left;
-  transition: transform 0.3s;
+.item__details {
+  display: flex;
 }
 
 .item__percentage {
-  float: left;
   margin-left: 20px;
-  transition: transform 0.3s;
-  font-size: 11px;
-  background-color: #ffdad9;
-  padding: 3px;
   border-radius: 3px;
-  width: 32px;
+  padding: 3px;
+  font-size: 11px;
   text-align: center;
+  background-color: #ffdad9;
+}
+
+.item__value,
+.item__percentage {
+  transform: translateX(20px);
+  transition: transform 0.3s;
 }
 
 .income .item__value,
 .income .item__delete--btn {
-  color: #28b9b5;
+  color: #00bda6;
 }
 
 .expenses .item__value,
 .expenses .item__percentage,
 .expenses .item__delete--btn {
-  color: #ff5049;
-}
-
-.item__delete {
-  float: left;
+  color: #ff6d34;
 }
 
 .item__delete--btn {
   font-size: 22px;
-  background: none;
   border: none;
-  cursor: pointer;
-  display: inline-block;
-  vertical-align: middle;
   line-height: 1;
-  display: none;
+  cursor: pointer;
+  background: none;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .item__delete--btn:focus {
@@ -291,11 +292,9 @@ h2 {
 }
 
 .item:hover .item__delete--btn {
-  display: block;
+  opacity: 1;
 }
-.item:hover .item__value {
-  transform: translateX(-20px);
-}
+.item:hover .item__value,
 .item:hover .item__percentage {
   transform: translateX(-20px);
 }
@@ -303,7 +302,7 @@ h2 {
 .unpaid {
   background-color: #ffdad9 !important;
   cursor: pointer;
-  color: #ff5049;
+  color: #ff6d34;
 }
 
 .unpaid .item__percentage {
