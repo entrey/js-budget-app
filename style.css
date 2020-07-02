@@ -1,6 +1,6 @@
-/**********************************************
-    GENERAL
-**********************************************/
+/**
+ * GENERAL
+ */
 
 * {
   margin: 0;
@@ -9,7 +9,7 @@
 }
 
 .clearfix::after {
-  content: "";
+  content: '';
   display: table;
   clear: both;
 }
@@ -33,9 +33,9 @@ body {
   border: 1px solid #ff5049 !important;
 }
 
-/**********************************************
-    TOP PART
-**********************************************/
+/**
+ * TOP PART
+ */
 
 .top {
   height: 40vh;
@@ -118,7 +118,11 @@ body {
     BOTTOM PART
 **********************************************/
 
-/* FORM */
+/**
+ * BOTTOM PART
+ */
+
+/** FORM */
 .add {
   padding: 14px;
   border-bottom: 1px solid #e7e7e7;
@@ -136,7 +140,7 @@ body {
   height: 44px;
   font-size: 18px;
   color: inherit;
-  background-color: #fff;
+  background-color: #ffffff;
   margin-right: 10px;
   font-weight: 300;
   transition: border 0.3s;
@@ -189,7 +193,7 @@ body {
   outline: none;
 }
 
-/* LISTS */
+/** LISTS */
 .container {
   width: 1000px;
   margin: 60px auto;
